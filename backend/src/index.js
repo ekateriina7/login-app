@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { router } from './routes/auth.route.js';
+import { authRouter } from './routes/auth.route.js';
+import { userRouter } from './routes/user.route.js';
 
 const PORT = process.env.PORT || 3005;
 
@@ -18,7 +19,8 @@ app.options('*', cors({
 }));
 
 app.use(express.json());
-app.use(router);
+app.use(authRouter);
+app.use('/users', userRouter);
 
 app.get('/', (req, res) => {
   res.send('hello');

@@ -93,12 +93,12 @@ function App() {
             element={<LoginPage />}
           />
 
-          <Route path="/" element={<RequireAuth />}>
+          {/* <Route path="/" element={<RequireAuth />}> */}
             <Route
               path="users"
               element={<UsersPage />}
             />
-          </Route>
+          {/* </Route> */}
         </Routes>
       </section>
 
