@@ -1,30 +1,20 @@
 export class ApiError extends Error {
-  constructor({ message, status, errors = {} }) {
+  constructor(status, message, errors = {}) {
     super(message);
+
     this.status = status;
     this.errors = errors;
   }
-  static badRequest(message, errors) {
-    return new ApiError({
-      message,
-      errors,
-      status: 400
-    });
+
+  static BadRequest(message, errors) {
+    return new ApiError(400, message, errors);
   }
 
-  static unauthorized(errors) {
-    return new ApiError({
-      message: 'unauthorized user',
-      errors,
-      status: 401
-    });
+  static Unauthorized() {
+    return new ApiError(401, 'User is not authorized');
   }
 
-  static notFound(errors) {
-    return new ApiError({
-      message: 'not found',
-      errors,
-      status: 404
-    });
+  static NotFound() {
+    return new ApiError(404, 'Not found');
   }
 }
