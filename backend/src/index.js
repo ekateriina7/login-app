@@ -4,6 +4,7 @@ import cors from 'cors';
 import { authRouter } from './routes/auth.route.js';
 import { userRouter } from './routes/user.route.js';
 import { errorMiddleware } from './middlewares/errorMiddleware.js';
+import cookieParser from 'cookie-parser';
 
 const PORT = process.env.PORT || 3005;
 
@@ -20,6 +21,7 @@ app.options('*', cors({
 }));
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(authRouter);
 app.use('/users', userRouter);
 app.use(errorMiddleware)
