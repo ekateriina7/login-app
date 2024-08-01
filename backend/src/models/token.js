@@ -1,0 +1,15 @@
+import { DataTypes } from "sequelize";
+import { client } from "../utils/db.js";
+import { User } from "./user.js";
+
+export const Token = client.define('token', {
+  refreshToken: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+}, {
+  timestamps: true,
+});
+
+Token.belongsTo(User, { foreignKey: 'userId' });
+User.hasOne(Token, { foreignKey: 'userId' });
