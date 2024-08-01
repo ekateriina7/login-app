@@ -7,9 +7,7 @@ export const Token = client.define('token', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-}, {
-  timestamps: true,
 });
 
-Token.belongsTo(User, { foreignKey: 'userId' });
-User.hasOne(Token, { foreignKey: 'userId' });
+Token.belongsTo(User);
+User.hasOne(Token);
