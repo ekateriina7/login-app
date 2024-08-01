@@ -91,6 +91,18 @@ const refresh = async (req, res) => {
   await generateTokens(res, user);
 };
 
+const logout = async (req, res) => {
+  const { refreshToken } = req.cookies;
+  const userData = await jwtService.verifyRefresh(refreshToken);
+
+  if (!userData || !refreshToken) {
+    throw ApiError.Unauthorized();
+  }
+
+  await tokenService.remove(userData.id);
+  res.sendStatus(204);
+};
+
 const generateTokens = async (res, user) => {
   const normalizedUser = userService.normalize(user);
   const accessToken = jwtService.sign(normalizedUser);
@@ -99,7 +111,7 @@ const generateTokens = async (res, user) => {
   await tokenService.save(normalizedUser.id, refreshToken);
 
   res.cookie('refreshToken', refreshToken, {
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   });
 
@@ -114,4 +126,5 @@ export const authController = {
   activate,
   login,
   refresh,
+  logout
 };
